@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2447d8">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Treenikierto</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+:root{--bg:#e9ecf1;--card:#fff;--ink:#1b2230;--mute:#667085;--line:#d5dae3;--acc:#2447d8;--acc-ink:#fff;--field:#f3f5f9;--danger:#b42318;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151a24;--card:#1f2633;--ink:#eef1f7;--mute:#98a2b3;--line:#2f384a;--acc:#6f8cff;--acc-ink:#0f1626;--field:#161c28;--danger:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151a24;--card:#1f2633;--ink:#eef1f7;--mute:#98a2b3;--line:#2f384a;--acc:#6f8cff;--acc-ink:#0f1626;--field:#161c28;--danger:#ff8a80;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.4 Barlow,system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:130px}
+main{max-width:560px;margin:0 auto;padding:16px 14px}
+h1,h2,.xn,.tm{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-weight:700;letter-spacing:.01em}
+h1{font-size:34px;line-height:1;margin:6px 0 12px}h2{font-size:22px;margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.top{display:flex;gap:8px;align-items:center}.wrap{position:relative;flex:1}
+.prev{color:var(--mute);font-size:14px;margin:4px 0 10px}
+.cols,.row{display:grid;grid-template-columns:26px 1fr 1fr 40px 36px;gap:8px;align-items:center}
+.cols{color:var(--mute);font-size:13px;margin:6px 0 4px;text-align:center}.row{margin-bottom:8px}.row .n{color:var(--mute);font-weight:600;text-align:center}
+input,textarea{width:100%;min-height:48px;font:600 20px Barlow,system-ui,sans-serif;text-align:center;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:6px}
+input::placeholder,textarea::placeholder{color:var(--mute);opacity:.6;font-weight:500}
+input.txt{text-align:left;font-size:17px;padding:6px 12px}
+input.nt{text-align:left;font-size:15px;font-weight:500;min-height:40px;margin:0 0 10px;padding:6px 12px}
+input.xn{text-align:left;font-size:22px;min-height:44px;background:none;border:0;border-bottom:1px dashed var(--line);border-radius:0;padding:4px 0}
+input.ck{width:28px;min-height:28px;padding:0;justify-self:center;accent-color:var(--acc)}
+.row.d input:not(.ck){border-color:var(--acc)}.row.d .n{color:var(--acc)}
+textarea{min-height:110px;font:14px/1.4 ui-monospace,Menlo,monospace;text-align:left;margin:8px 0}
+input:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+button{font:600 16px Barlow,system-ui,sans-serif;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;cursor:pointer}
+button.pri{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+button.ghost{border:0;background:none;color:var(--mute);min-width:40px;padding:0 8px}button.del{color:var(--danger)}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px}.tools button{min-height:36px;font-size:14px;padding:0 10px}.tools{align-items:center}.grp{display:flex}.grp button{border-radius:0}.grp button:first-child{border-radius:10px 0 0 10px}.grp button:last-child{border-radius:0 10px 10px 0}.sp{flex:1}button.seg[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}button.ok{background:none;color:var(--acc);border-color:var(--acc)}button:disabled{opacity:.35;cursor:default}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 0 12px;padding-bottom:4px}
+.chip{white-space:nowrap;flex:none}.chip[aria-current="true"]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.sg{position:absolute;left:0;right:0;top:100%;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.2);overflow:hidden}.sg:empty{display:none}
+.sg button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;font-weight:500}
+.empty,.sum{color:var(--mute)}.empty{text-align:center;padding:24px 12px}.full{width:100%;margin-top:4px}
+details{border-top:1px solid var(--line);padding:8px 0}summary{font-weight:600;cursor:pointer;min-height:32px}
+.ex{margin:4px 0;font-size:15px}.ex b{font-weight:600}
+.bi{display:flex;align-items:center;border-bottom:1px solid var(--line);padding:2px 0}.bi span{flex:1}
+.st{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}.st b{color:var(--acc)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+nav button{flex:1;border:0;border-radius:0;min-height:60px;font-size:15px;padding:0 4px;background:none;color:var(--mute)}
+nav button[aria-current="page"]{color:var(--acc);box-shadow:inset 0 3px 0 var(--acc)}
+#fl{position:fixed;left:0;right:0;bottom:calc(60px + env(safe-area-inset-bottom,0px));z-index:9}
+#tb,#ts{display:flex;align-items:center;gap:8px;padding:8px 14px}
+#tb{background:var(--acc);color:var(--acc-ink)}#tb button{background:none;color:inherit;border-color:currentColor;min-height:36px;padding:0 10px}
+.tm{flex:1;font-size:28px}#ts{background:var(--ink);color:var(--bg)}#ts span{flex:1}#ts button{min-height:36px}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div id="fl"><div id="tb" hidden><span class="tm" id="tm">1:30</span><button data-a="tm" data-s="-15">−15 s</button><button data-a="tm" data-s="15">+15 s</button><button data-a="tx">Sulje</button></div><div id="ts" hidden><span id="tt"></span><button data-a="undo">Kumoa</button></div></div>
+<nav><button data-a="v" data-v="train">Treeni</button><button data-a="v" data-v="hist">Historia</button><button data-a="v" data-v="bank">Liikepankki</button><button data-a="v" data-v="data">Tiedot</button></nav>
+<script>
+(function(){
+var K='treenikierto-v2',SEED=["Alatalja", "Alatalja, kapea", "Alatalja, v-kahva", "Alaviistorintaprässi", "Askelkyykky", "Askelkyykky, ssb", "Bulgarialainen kyykky, smith", "Dippi", "Dippikone", "Etureisien ojennus, laite", "Face pull", "Facepull, talja", "Flyes, kp", "Flyes, kp, tasapenkki", "Flyes, kp, vinopenkki", "Flyes, maaten, kp", "Flyes, pec-deck", "Flyes, peck deck", "Flyes, ristitalja", "Flyes, ristitalja, seisoen, ylhäältä", "Flyes, seisten, ristitalja", "Flyes, selällään, kp", "Flyes/peck deck", "Forkkukääntö, hammer, kp", "Forkkukääntö, tanko", "Forkkuliike", "Hack-kyykke, laite", "Hack-kyykky, kapea", "Hauiskääntö, Arnold", "Hauiskääntö, hammer, vuoro käsin, kp", "Hauiskääntö, istuen, Scott, mutkatanko", "Hauiskääntö, istuen, kääntäen, kp", "Hauiskääntö, istuen, vuorokäsin, kp", "Hauiskääntö, keskitetty, kp", "Hauiskääntö, keskitetty, kp, istuen", "Hauiskääntö, keskitetty, kp, penkillä", "Hauiskääntö, keskitetty, kp, penkillä, seisten", "Hauiskääntö, keskitetty, kp, scott", "Hauiskääntö, keskitetty, scott, kp", "Hauiskääntö, keskitty, penkki, kp", "Hauiskääntö, keskitty, scott, kp", "Hauiskääntö, koneessa", "Hauiskääntö, kp, istuen, vuorokäsin, kääntäen", "Hauiskääntö, kp, istuen, vuorokäsin, kääntäen, vinopenkillä", "Hauiskääntö, kp, keskitetty, pystypenkki", "Hauiskääntö, kp, scott", "Hauiskääntö, kp, seisten, vuorokäsin, kääntäen", "Hauiskääntö, laite", "Hauiskääntö, scott, istuen, mutkatanko", "Hauiskääntö, scott, keskitetty, kp", "Hauiskääntö, seisten, hammer, vuorokäsin, kp", "Hauiskääntö, seisten, kääntäen, kp", "Hauiskääntö, seisten, mutkatanko", "Hauiskääntö, seisten, suora tanko", "Hauiskääntö, seisten, talja, tanko", "Hauiskääntö, seisten, vuorokäsin, kp", "Hauiskääntö, seisten, z-tanko", "Hauiskääntö, talja, suora tanko", "Hauiskääntö, talja, suora tanko, seisten", "Hauiskääntö, tuettu, Scott, kp", "Hauiskääntö, vuorokäsin, vinopenkki, kp", "Hauiskääntö, z-tanko, seisten", "Jalkaprässi", "Jalkojen nostot", "Jalkojen nostot, penkillä", "Jalkojen nostot, roikkuen", "Keskitetty hauiskääntö, kp, penkillä", "Kulmasoutu, tanko", "Kulmasoutukone", "Kyykky", "Kyykky, ssb", "Kyykky,ssb", "Lankku, kyynär", "Lankku, suorin käsin", "Lankkuliikkeet", "Lankkutreeni, Ida Jemina", "Lankutus", "Lapapunnerrus", "Lationnosto tangolla", "Leaunveto", "Leuanvetokone", "Linkkuveitsi", "MTS Row", "MTS row -laite", "Maastaveto", "Niskantakaapunnerrus, seisten, tanko", "Ojentajalaite", "Ojentajapunnerrus, kp, seisten, käsi kerrallaan", "Ojentajapunnerrus, laite", "Ojentajapunnerrus, seisten, kp", "Ojentajat, kone", "Ojentapunnerrus, kp, vuoro käsin, seisten", "Ojentapunnerrus, laite", "Olkien kohautukse, edestä, tanko", "Olkien kohautukset, edestä, tanko", "Olkien kohautukset, tanko", "Pakarapotkulaite", "Pec deck", "Peck dec", "Peck deck", "Penkkipunnerrus", "Penkkipunnerrus, kp", "Pohjeliike", "Pohjeliike 1", "Pohjeliike 2", "Pohjenosto, ATX-laite", "Pohjenosto, SSB", "Pohjenosto, istuen", "Pohjenosto, istuen, laite", "Pohjenosto, istuttava pohjelaite", "Pohjenosto, istuttava pohjelaite, hitaasti", "Pohjenosto, jalkaprässi", "Pohjenosto, pohjelaite, istuen", "Pohjenosto, smith", "Pohjenosto, vaakaprässi", "Pohjenostot, istuttava pohjelaite", "Pohjenostot, jalkaprässi", "Pohjetreeni", "Pohkeet, istuen", "Pohkeet, vaakaprässi", "Pullover, kp", "Pullover, köysi", "Pullover, talja", "Pullover, talja, lyhyt köysi", "Pullover, talja, pitkä köysi", "Pullover, talja, tanko", "Pushdown", "Pushdown, köysi", "Pushdown, talja", "Pushdown, talja, köysi", "Pushdown, talja, tanko", "Pushdown, tanko", "Pushdown, tryon", "Pystypunnerrus, istuen, kp", "Pystypunnerrus, istuen, tanko", "Pystypunnerrus, kp, istuen", "Pystypunnerrus, laite", "Pystypunnerrus, pakkakone", "Pystypunnerrus, seisten, tanko", "Pystypunnerrus, smith", "Pystysoutu, seisten, z-tanko", "Pystysoutu, talja", "Rannekääntö, talja", "Ranskalainen punnerrus, 1x kp, istuen", "Ranskalainen punnerrus, istuen", "Ranskalainen punnerrus, istuen, kp", "Ranskalainen punnerrus, istuen, z-tanko", "Ranskalainen punnerrus, maaten", "Ranskalainen punnerrus, maaten, z-tanko", "Reiden koukistukset, istuen", "Reiden koukistukset, maaten", "Reiden koukistukset, seisten", "Reiden ojennukset", "Reiden ojennukset (hitaammin)", "Reiden ojennukset, jalka kerrallaan", "Reisien koukistukset, seisomalaite", "Reisien loitonnukset", "Rintaprässi", "Rintaprässi, alaviisto", "Romanialainen maastaveto", "Räkkiveto", "SJMV", "SSB kyykky", "T-kulmasoutu", "Takakyykky", "Takaolkapäät, alatalja", "Takaolkapäät, kone", "Takaolkapäät, kp", "Takaolkapäät, laite", "Takaolkapäät, talja, köysi", "Takaolkapäät, tanko", "Total abdominal", "V-pito", "Vatsa utistus, penkki", "Vatsalihakset", "Vatsalihasliike", "Vatsalihasliikkeet", "Vatsalihastreeni", "Vatsalihastreeni, jalkojen nostot roikkuen", "Vatsalihastreeni, voimapyörä", "Vatsaliike", "Vatsarutistus+saksaus", "Vatsarutistus, jalat ylhäällä", "Vatsarutistus, paino ylhäällä", "Vatsarutistus, penkillä", "Vatsarutistus, penkki", "Vatsarutistus, penkki, paino sylissä", "Vatsatreeni", "Vinopenkkipunnerrus", "Vinopenkkipunnerrus, kp", "Vinopenkkipunnerrus, smith", "Vinopenkkipunnerrus, tanko", "Vipunostot sivuille, istuen, kp", "Vipunostot sivuille, kp", "Vipunostot sivuille, kp, istuen", "Vipunostot sivuille, kp, seisten", "Vipunostot sivuille, laite", "Vipunostot sivuille, seisten, kp", "Vipunostot sivuille, seisten, laite", "Vipunostot sivuille, seisten, talja", "Vipunostot taakse, laite", "Vipunostot taakse, seisten, kp", "Vipunostot, eteen, kp, seisten", "Vipunostot, eteen, seisten, kp", "Vipunostot, eteen, seisten, tanko", "Vipunostot, eteen, talja", "Vipunostot, eteen, tanko, seisten", "Vipunostot, istuen, sivuille, kp", "Vipunostot, laite", "Vipunostot, seisten, sivuille, kp", "Vipunostot, sivuille, istuen, kp", "Vipunostot, sivuille, kp, istuen", "Vipunostot, sivuille, kp, seisten", "Vipunostot, sivuille, seisten, kp", "Vipunostot, taakse, kp, seisten", "Vipunostot, taakse, vinopenkillä, kp", "Voimapyörä", "Ylätalja", "Ylätalja, edestä, suora tanko", "Ylätalja, eteen", "Ylätalja, eteen, lapiotanko", "Ylätalja, eteen, suora tanko", "Ylätalja, eteen, tanko", "Ylätalja, taakse", "Ylätaljakone"],LAST=[[["Vinopenkkipunnerrus, smith",[["50","6"],["60","6"],["75","5"]]],["Pystypunnerrus, kp, istuen",[["30","6"],["35","6"],["35","6"]]],["Hauiskääntö, scott, istuen, mutkatanko",[["37.5","10"],["40","10"],["40","10"]]],["Flyes, selällään, kp",[["17.5","15"],["17.5","15"],["17.5","15"]]],["Vipunostot sivuille, seisten, kp",[["16","12"],["16","12"],["16","12"]]],["Hauiskääntö, laite",[["90","12"],["80","12"],["70","15"]]],["Vatsalihasliike",[]]],[["Kyykky",[["80","6"],["100","6"],["120","6"]]],["Kulmasoutu, tanko",[["90","12"],["100","12"],["110","12"]]],["Dippi",[["","12"],["","12"],["","12"]]],["Reisien koukistukset, seisomalaite",[["90","15"],["90","12"],["85","12"]]],["Pullover, talja",[["32.5","15"],["36.25","12"],["36.25","12"]]],["Ojentapunnerrus, kp, vuoro käsin, seisten",[["17.5","12"],["20","12"],["20","12"]]],["Pohjenosto, vaakaprässi",[]]],[["Penkkipunnerrus",[["110","5"]]],["Niskantakaapunnerrus, seisten, tanko",[["60","10"]]],["Hauiskääntö, seisten, suora tanko",[["40","12"]]],["Peck dec",[["105.5","12"]]],["Facepull, talja",[["36.25","12"]]],["Hauiskääntö, hammer, vuoro käsin, kp",[["20","10"]]],["Vatsalihasliike",[]]],[["Romanialainen maastaveto",[["160","10"]]],["Ylätalja, taakse",[["98","10"]]],["Ranskalainen punnerrus, maaten, z-tanko",[["50","10"]]],["Etureisien ojennus, laite",[["90","15"]]],["Alatalja, kapea",[["107","10"]]],["Pushdown, talja",[["47.5","10"]]],["Pohjenosto, vaakaprässi",[["75","12"]]]]],DT=["2026-11-09","2026-11-11","2026-11-13","2026-11-14"],MAP={"Flyes, maaten, kp":"Flyes, selällään, kp","Flyes, pec-deck":"Pec deck","Flyes, peck deck":"Pec deck","Flyes/peck deck":"Pec deck","Peck dec":"Pec deck","Peck deck":"Pec deck","Flyes, seisten, ristitalja":"Flyes, ristitalja","Facepull, talja":"Face pull","Hack-kyykke, laite":"Hack-kyykky, laite","Hauiskääntö, keskitetty, kp":"Hauiskääntö, keskitetty, kp, penkillä","Keskitetty hauiskääntö, kp, penkillä":"Hauiskääntö, keskitetty, kp, penkillä","Hauiskääntö, keskitty, penkki, kp":"Hauiskääntö, keskitetty, kp, penkillä","Hauiskääntö, kp, keskitetty, pystypenkki":"Hauiskääntö, keskitetty, kp, penkillä","Hauiskääntö, keskitetty, kp, istuen":"Hauiskääntö, keskitetty, kp, penkillä","Hauiskääntö, keskitetty, kp, scott":"Hauiskääntö, kp, scott","Hauiskääntö, keskitetty, scott, kp":"Hauiskääntö, kp, scott","Hauiskääntö, keskitty, scott, kp":"Hauiskääntö, kp, scott","Hauiskääntö, scott, keskitetty, kp":"Hauiskääntö, kp, scott","Hauiskääntö, tuettu, Scott, kp":"Hauiskääntö, kp, scott","Hauiskääntö, hammer, vuoro käsin, kp":"Hauiskääntö, hammer, vuorokäsin, kp","Hauiskääntö, seisten, hammer, vuorokäsin, kp":"Hauiskääntö, hammer, vuorokäsin, kp","Hauiskääntö, kp, istuen, vuorokäsin, kääntäen, vinopenkillä":"Hauiskääntö, kp, istuen, vuorokäsin, kääntäen","Hauiskääntö, vuorokäsin, vinopenkki, kp":"Hauiskääntö, kp, istuen, vuorokäsin, kääntäen","Hauiskääntö, istuen, kääntäen, kp":"Hauiskääntö, kp, istuen, vuorokäsin, kääntäen","Hauiskääntö, seisten, kääntäen, kp":"Hauiskääntö, kp, seisten, vuorokäsin, kääntäen","Hauiskääntö, istuen, Scott, mutkatanko":"Hauiskääntö, scott, istuen, mutkatanko","Hauiskääntö, seisten, mutkatanko":"Hauiskääntö, seisten, z-tanko","Hauiskääntö, z-tanko, seisten":"Hauiskääntö, seisten, z-tanko","Hauiskääntö, talja, suora tanko, seisten":"Hauiskääntö, talja, suora tanko","Hauiskääntö, seisten, talja, tanko":"Hauiskääntö, talja, suora tanko","Hauiskääntö, koneessa":"Hauiskääntö, laite","Lankkuliikkeet":"Lankutus","Lankkutreeni, Ida Jemina":"Lankutus","Kyykky,ssb":"Kyykky, ssb","SSB kyykky":"Kyykky, ssb","Leaunveto":"Leuanveto","MTS Row":"MTS row, laite","MTS row -laite":"MTS row, laite","Ojentajalaite":"Ojentajapunnerrus, laite","Ojentajat, kone":"Ojentajapunnerrus, laite","Ojentapunnerrus, laite":"Ojentajapunnerrus, laite","Ojentapunnerrus, kp, vuoro käsin, seisten":"Ojentajapunnerrus, kp, seisten, käsi kerrallaan","Olkien kohautukse, edestä, tanko":"Olkien kohautukset, edestä, tanko","Pohjenosto, istuen":"Pohjenosto, istuen, laite","Pohjenosto, istuttava pohjelaite":"Pohjenosto, istuen, laite","Pohjenosto, istuttava pohjelaite, hitaasti":"Pohjenosto, istuen, laite","Pohjenosto, pohjelaite, istuen":"Pohjenosto, istuen, laite","Pohjenostot, istuttava pohjelaite":"Pohjenosto, istuen, laite","Pohkeet, istuen":"Pohjenosto, istuen, laite","Pohjenostot, jalkaprässi":"Pohjenosto, jalkaprässi","Pohkeet, vaakaprässi":"Pohjenosto, vaakaprässi","Pohjeliike 1":"Pohjeliike","Pohjeliike 2":"Pohjeliike","Pohjetreeni":"Pohjeliike","Pullover, köysi":"Pullover, talja, köysi","Pullover, talja, lyhyt köysi":"Pullover, talja, köysi","Pullover, talja, pitkä köysi":"Pullover, talja, köysi","Pushdown":"Pushdown, talja","Pushdown, köysi":"Pushdown, talja, köysi","Pushdown, tanko":"Pushdown, talja, tanko","Pystypunnerrus, istuen, kp":"Pystypunnerrus, kp, istuen","Pystypunnerrus, pakkakone":"Pystypunnerrus, laite","Ranskalainen punnerrus, 1x kp, istuen":"Ranskalainen punnerrus, istuen, kp","Reiden koukistukset, seisten":"Reisien koukistukset, seisomalaite","Reiden ojennukset":"Etureisien ojennus, laite","Reiden ojennukset (hitaammin)":"Etureisien ojennus, laite","Rintaprässi, alaviisto":"Alaviistorintaprässi","Takaolkapäät, kone":"Takaolkapäät, laite","Vatsa utistus, penkki":"Vatsarutistus, penkillä","Vatsarutistus, penkki":"Vatsarutistus, penkillä","Vatsalihasliikkeet":"Vatsalihasliike","Vatsaliike":"Vatsalihasliike","Vatsalihakset":"Vatsalihasliike","Vatsalihastreeni":"Vatsalihasliike","Vatsatreeni":"Vatsalihasliike","Vatsalihastreeni, jalkojen nostot roikkuen":"Jalkojen nostot, roikkuen","Vatsalihastreeni, voimapyörä":"Voimapyörä","Vinopenkkipunnerrus, tanko":"Vinopenkkipunnerrus","Vipunostot sivuille, kp":"Vipunostot sivuille, seisten, kp","Vipunostot sivuille, kp, seisten":"Vipunostot sivuille, seisten, kp","Vipunostot, seisten, sivuille, kp":"Vipunostot sivuille, seisten, kp","Vipunostot, sivuille, kp, seisten":"Vipunostot sivuille, seisten, kp","Vipunostot, sivuille, seisten, kp":"Vipunostot sivuille, seisten, kp","Vipunostot sivuille, kp, istuen":"Vipunostot sivuille, istuen, kp","Vipunostot, istuen, sivuille, kp":"Vipunostot sivuille, istuen, kp","Vipunostot, sivuille, istuen, kp":"Vipunostot sivuille, istuen, kp","Vipunostot sivuille, seisten, laite":"Vipunostot sivuille, laite","Vipunostot, laite":"Vipunostot sivuille, laite","Vipunostot, eteen, kp, seisten":"Vipunostot, eteen, seisten, kp","Vipunostot, eteen, tanko, seisten":"Vipunostot, eteen, seisten, tanko","Vipunostot, taakse, kp, seisten":"Vipunostot taakse, seisten, kp","Ylätalja, edestä, suora tanko":"Ylätalja, eteen, suora tanko","Ylätalja, eteen, tanko":"Ylätalja, eteen, suora tanko"};
+var view='train',aw=0,bq='',pn='',S=null,snap=null,tto=0,tEnd=0,tI=null;
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function num(v){return parseFloat(String(v).replace(',','.'))||0;}
+function ns(){return [{kg:'',reps:''},{kg:'',reps:''},{kg:'',reps:''}];}
+function cs(a){return a.map(function(s){return {kg:s.kg,reps:s.reps};});}
+function mkW(i,ex,d){return {id:uid(),name:'Treeni '+(i+1),date:d,note:'',ex:ex.map(function(e){return {id:uid(),name:e[0],note:'',sets:e[1].length?e[1].map(function(s){return {kg:s[0],reps:s[1]};}):ns()};})};}
+function cp(c){return {id:uid(),wk:c.wk.map(function(w){return {id:uid(),name:w.name,date:'',note:w.note||'',ex:w.ex.map(function(e){return {id:uid(),name:e.name,note:e.note||'',u:e.u||'kg',sets:cs(e.sets)};})};})};}
+function srt(){S.bank.sort(function(a,b){return a.localeCompare(b,'fi');});}
+function migrate(){
+  if(S.v>=3)return;
+  var seen={},b=[];
+  function add(n){var l=n.toLowerCase();if(!seen[l]){seen[l]=1;b.push(n);}}
+  S.cycles.forEach(function(c){c.wk.forEach(function(w){w.note=w.note||'';w.ex.forEach(function(e){e.name=MAP[e.name]||e.name;e.note=e.note||'';});});});
+  S.bank.forEach(function(n){add(MAP[n]||n);});
+  S.cycles.forEach(function(c){c.wk.forEach(function(w){w.ex.forEach(function(e){add(e.name);});});});
+  S.bank=b;srt();S.v=3;S.rest=S.rest||90;
+}
+try{S=JSON.parse(localStorage.getItem(K));}catch(e){S=null;}
+if(!S||!S.cycles||!S.cycles.length){var c0={id:uid(),wk:LAST.map(function(x,i){return mkW(i,x,DT[i]);})};S={bank:SEED.slice(),cycles:[c0,cp(c0)]};}
+migrate();
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function cur(){return S.cycles[S.cycles.length-1];}
+function W(){return cur().wk[aw];}
+function fx(id){var w=W();for(var i=0;i<w.ex.length;i++)if(w.ex[i].id===id)return w.ex[i];}
+function iso(){var d=new Date(),p=function(n){return (n<10?'0':'')+n;};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function fd(s){return new Date(s+'T12:00:00').toLocaleDateString('fi-FI',{weekday:'short',day:'numeric',month:'numeric'});}
+function st(s,u){return (s.kg||'-')+' '+u+' × '+(s.reps||'-');}
+function canon(n){var l=n.toLowerCase();for(var i=0;i<S.bank.length;i++)if(S.bank[i].toLowerCase()===l)return S.bank[i];return null;}
+function addBank(n){var c=canon(n);if(c)return c;S.bank.push(n);srt();return n;}
+var LB=0.45359237;
+function U(e){return e.u==='lb'?'lb':'kg';}
+function cv(v,f,t){return f===t?v:(f==='lb'?v*LB:v/LB);}
+function top(e,u){var m=0;e.sets.forEach(function(s){var v=cv(num(s.kg),U(e),u);if(v>m)m=v;});return m;}
+function wDone(w){var n=0,all=true;w.ex.forEach(function(e){e.sets.forEach(function(s){n++;if(!s.d)all=false;});});return n>0&&all;}
+function chipT(w){return w.name+(wDone(w)?' ✓':'');}
+function rf(){var w=W(),c=document.querySelector('[data-c="'+aw+'"]');if(c&&w)c.textContent=chipT(w);var b=document.getElementById('wdone');if(b&&w){var d=wDone(w);b.className='full'+(d?' ok':' pri');b.textContent=d?'Treeni tehty ✓ Merkitse ei tehdyksi':'Merkitse koko treeni tehdyksi';}}
+function prev(name){
+  if(S.cycles.length<2)return null;var l=name.toLowerCase();
+  var wk=S.cycles[S.cycles.length-2].wk;
+  for(var i=0;i<wk.length;i++)for(var j=0;j<wk[i].ex.length;j++)if(wk[i].ex[j].name.toLowerCase()===l)return wk[i].ex[j];
+  return null;
+}
+function dl(e){
+  var p=prev(e.name);if(!p)return '';var u=U(e),a=top(e,u),b=top(p,u);
+  if(!a||!b)return '';var d=Math.round((a-b)*10)/10;if(!d)return '';
+  return ' '+(d>0?'▲ +':'▼ ')+String(d).replace('.',',')+' '+u+' ylimmässä painossa';
+}
+function train(){
+  var c=cur();if(aw>=c.wk.length)aw=0;var w=c.wk[aw];
+  var h='<h1>Kierto '+S.cycles.length+'</h1><div class="chips">';
+  c.wk.forEach(function(x,i){h+='<button class="chip" data-a="aw" data-i="'+i+'" data-c="'+i+'"'+(i===aw?' aria-current="true"':'')+'>'+esc(chipT(x))+'</button>';});
+  h+='<button class="chip" data-a="addw" aria-label="Lisää treeni">+</button></div>';
+  if(!w)return h+'<p class="empty">Ei treenejä. Lisää treeni plus-painikkeella.</p>';
+  h+='<div class="card"><div class="top"><div class="wrap"><label class="sr" for="wn">Treenin nimi</label><input class="txt" id="wn" data-a="wname" value="'+esc(w.name)+'"></div><div class="wrap"><label class="sr" for="wd">Päivä</label><input class="txt" id="wd" type="date" data-a="wdate" value="'+esc(w.date)+'"></div></div><input class="txt nt" style="margin:8px 0 0" data-a="wnote" placeholder="Treenin muistiinpano" aria-label="Treenin muistiinpano" value="'+esc(w.note||'')+'"><button class="full'+(wDone(w)?' ok':' pri')+'" id="wdone" data-a="wdone" style="margin-top:10px"'+(w.ex.some(function(e){return e.sets.length;})?'':' disabled')+'>'+(wDone(w)?'Treeni tehty ✓ Merkitse ei tehdyksi':'Merkitse koko treeni tehdyksi')+'</button></div>';
+  w.ex.forEach(function(e,xi){
+    var pv=prev(e.name);
+    h+='<section class="card"><div class="wrap"><input class="xn" data-a="exname" data-e="'+e.id+'" value="'+esc(e.name)+'" aria-label="Liikkeen nimi" autocomplete="off"><div class="sg"></div></div>';
+    h+='<div class="tools"><div class="grp"><button data-a="mv" data-e="'+e.id+'" data-d="-1" aria-label="Siirrä liike ylöspäin"'+(xi===0?' disabled':'')+'>▲ Ylös</button><button data-a="mv" data-e="'+e.id+'" data-d="1" aria-label="Siirrä liike alaspäin"'+(xi===w.ex.length-1?' disabled':'')+'>▼ Alas</button></div><div class="grp" role="group" aria-label="Painon yksikkö"><button class="seg" data-a="unit" data-e="'+e.id+'" data-u="kg" aria-pressed="'+(U(e)==='kg')+'">kg</button><button class="seg" data-a="unit" data-e="'+e.id+'" data-u="lb" aria-pressed="'+(U(e)==='lb')+'">lb</button></div><span class="sp"></span><button data-a="prog" data-n="'+esc(e.name)+'">Kehitys</button><button class="del" data-a="rmex" data-e="'+e.id+'">Poista</button></div>';
+    if(pv&&pv.sets.length)h+='<p class="prev">Edellinen kierto: '+esc(pv.sets.map(function(s){return st(s,U(pv));}).join(', '))+'<b data-dl="'+e.id+'">'+dl(e)+'</b></p>';
+    h+='<input class="txt nt" data-a="exnote" data-e="'+e.id+'" placeholder="Muistiinpano, esim. laite 4, penkki 3" aria-label="Liikkeen muistiinpano" value="'+esc(e.note||'')+'">';
+    h+='<div class="cols"><span>Sarja</span><span>Paino ('+U(e)+')</span><span>Toistot</span><span>Tehty</span><span></span></div>';
+    e.sets.forEach(function(s,i){
+      h+='<div class="row'+(s.d?' d':'')+'"><span class="n">'+(i+1)+'</span><input inputmode="decimal" data-a="set" data-f="kg" data-e="'+e.id+'" data-i="'+i+'" value="'+esc(s.kg)+'" aria-label="Paino, sarja '+(i+1)+'"><input inputmode="numeric" data-a="set" data-f="reps" data-e="'+e.id+'" data-i="'+i+'" value="'+esc(s.reps)+'" aria-label="Toistot, sarja '+(i+1)+'"><input type="checkbox" class="ck" data-a="done" data-e="'+e.id+'" data-i="'+i+'"'+(s.d?' checked':'')+' aria-label="Sarja '+(i+1)+' tehty"><button class="ghost" data-a="rmset" data-e="'+e.id+'" data-i="'+i+'" aria-label="Poista sarja '+(i+1)+'">✕</button></div>';
+    });
+    h+='<button data-a="addset" data-e="'+e.id+'">Lisää sarja</button></section>';
+  });
+  h+='<div class="card"><div class="wrap"><label class="sr" for="ne">Lisää liike</label><input class="txt" id="ne" data-a="ne" placeholder="Lisää liike, aloita kirjoittamalla nimi" autocomplete="off"><div class="sg"></div></div></div>';
+  h+='<button class="full ghost del" data-a="rmw">Poista tämä treeni</button><button class="full pri" data-a="newc">Aloita uusi kierto</button>';
+  return h;
+}
+function hist(){
+  var h='<h1>Historia</h1>';
+  S.cycles.slice().reverse().forEach(function(c,ri){
+    h+='<section class="card"><h2>Kierto '+(S.cycles.length-ri)+(ri===0?' (käynnissä)':'')+'</h2>';
+    c.wk.forEach(function(w){
+      h+='<details><summary>'+esc(w.name)+(wDone(w)?' ✓':'')+(w.date?', '+esc(fd(w.date)):'')+'</summary>'+(w.note?'<p class="prev">'+esc(w.note)+'</p>':'');
+      w.ex.forEach(function(e){h+='<p class="ex"><b>'+esc(e.name)+'</b>: '+esc(e.sets.map(function(s){return st(s,U(e));}).join(', '))+(e.note?' <i>('+esc(e.note)+')</i>':'')+'</p>';});
+      h+='</details>';
+    });
+    h+='</section>';
+  });
+  return h;
+}
+function bl(){
+  var q=bq.trim().toLowerCase(),h='';
+  S.bank.forEach(function(n,i){if(!q||n.toLowerCase().indexOf(q)>=0)h+='<div class="bi"><span>'+esc(n)+'</span><button class="ghost del" data-a="rmb" data-i="'+i+'" aria-label="Poista '+esc(n)+' liikepankista">Poista</button></div>';});
+  return h||'<p class="empty">Ei osumia.</p>';
+}
+function bank(){
+  return '<h1>Liikepankki</h1><p class="sum">'+S.bank.length+' liikettä. Treeniin kirjattu uusi liike tallentuu tänne automaattisesti.</p><div class="card"><div class="top"><input class="txt" id="bn" data-a="bn" placeholder="Uusi liike" autocomplete="off"><button class="pri" data-a="addb">Lisää</button></div><div class="top" style="margin-top:8px"><input class="txt" data-a="bq" placeholder="Hae liikkeitä" value="'+esc(bq)+'"></div></div><div class="card" id="bl">'+bl()+'</div>';
+}
+function data(){
+  return '<h1>Tiedot</h1><div class="card"><h2>Varmuuskopio ja vienti</h2><p class="prev">Tiedot ovat vain tämän selaimen muistissa. Kopioi varmuuskopio tekstinä talteen, esimerkiksi muistiinpanoihin.</p><div class="top"><button data-a="expj">Varmuuskopio</button><button data-a="expt">Taulukko (Excel)</button></div><textarea id="out" readonly placeholder="Valitse ensin, mitä haluat viedä"></textarea><button class="full" data-a="copy">Kopioi teksti</button></div><div class="card"><h2>Tuo varmuuskopio</h2><p class="prev">Liitä aiemmin kopioitu varmuuskopio. Tuonti korvaa kaikki nykyiset tiedot.</p><textarea id="inp" placeholder="Liitä varmuuskopio tähän"></textarea><button class="full pri" data-a="imp">Tuo tiedot</button><p class="prev" id="im"></p></div><div class="card"><h2>Lepoaika</h2><div class="top"><input id="rs" data-a="rest" inputmode="numeric" value="'+(S.rest||90)+'" aria-label="Lepoaika sekunteina"><span>sekuntia</span></div></div>';
+}
+function prog(){
+  var rows=[],l=pn.toLowerCase();
+  S.cycles.forEach(function(c,ci){c.wk.forEach(function(w){w.ex.forEach(function(e){
+    if(e.name.toLowerCase()!==l||!w.date)return;
+    var t=0,r=0,m=0;
+    e.sets.forEach(function(s){var k=cv(num(s.kg),U(e),'kg'),n=num(s.reps);if(k>0&&n>0){if(k>t||(k===t&&n>r)){t=k;r=n;}var x=n===1?k:k*(1+n/30);if(x>m)m=x;}});
+    if(t)rows.push({c:ci+1,d:w.date,t:t,r:r,m:m,u:U(e)});
+  });});});
+  rows.sort(function(a,b){return a.d<b.d?-1:1;});
+  var h='<h1>Kehitys</h1><p class="sum">'+esc(pn)+'</p><button data-a="v" data-v="train" style="margin:8px 0 12px">Takaisin treeniin</button>';
+  if(!rows.length)return h+'<p class="empty">Ei vielä kirjauksia päivämäärällä. Kirjaa sarjoja, niin kehitys näkyy tässä.</p>';
+  var du=rows[rows.length-1].u,bt=0,bm=0;rows.forEach(function(r){if(r.t>bt)bt=r.t;if(r.m>bm)bm=r.m;});
+  var f=function(x){return String(Math.round(cv(x,'kg',du)*10)/10).replace('.',',');};
+  h+='<div class="card"><div class="st"><span>Suurin paino</span><b>'+f(bt)+' '+du+'</b></div><div class="st"><span>Paras arvioitu yhden toiston maksimi</span><b>'+f(bm)+' '+du+'</b></div>';
+  if(rows.length>1){
+    var lo=Math.min.apply(null,rows.map(function(r){return r.t;})),hi=bt,sp=(hi-lo)||1,p=[];
+    rows.forEach(function(r,i){p.push((10+i*(280/(rows.length-1))).toFixed(1)+','+(70-(r.t-lo)/sp*60).toFixed(1));});
+    h+='<svg viewBox="0 0 300 80" width="100%" role="img" aria-label="Suurimman painon kehitys" style="margin-top:10px"><polyline points="'+p.join(' ')+'" fill="none" style="stroke:var(--acc)" stroke-width="2.5"/>'+p.map(function(q){return '<circle cx="'+q.split(',')[0]+'" cy="'+q.split(',')[1]+'" r="3.5" style="fill:var(--acc)"/>';}).join('')+'</svg>';
+  }
+  h+='</div><div class="card">';
+  rows.slice().reverse().forEach(function(r){h+='<div class="st"><span>'+esc(fd(r.d))+' (kierto '+r.c+')</span><span>'+f(r.t)+' '+du+' × '+r.r+(r.t===bt?' <b>ennätys</b>':'')+'</span></div>';});
+  return h+'</div>';
+}
+var app=document.getElementById('app');
+function render(){
+  app.innerHTML=view==='train'?train():view==='hist'?hist():view==='bank'?bank():view==='data'?data():prog();
+  document.querySelectorAll('nav button').forEach(function(b){b.setAttribute('aria-current',(b.dataset.v===view||(view==='prog'&&b.dataset.v==='train'))?'page':'false');});
+}
+function sg(inp){
+  var box=inp.parentNode.querySelector('.sg'),q=inp.value.trim().toLowerCase();
+  if(!q){box.innerHTML='';return;}
+  var a=[],b=[];S.bank.forEach(function(n){var i=n.toLowerCase().indexOf(q);if(i===0)a.push(n);else if(i>0)b.push(n);});
+  var h='';a.concat(b).slice(0,6).forEach(function(n){h+='<button data-a="pick" data-v="'+esc(n)+'">'+esc(n)+'</button>';});
+  if(!canon(inp.value.trim()))h+='<button data-a="pick" data-v="'+esc(inp.value.trim())+'">Uusi liike: '+esc(inp.value.trim())+'</button>';
+  box.innerHTML=h;
+}
+function addEx(name){var n=name.trim();if(!n||!W())return;n=addBank(n);W().ex.push({id:uid(),name:n,note:'',sets:ns()});save();render();}
+function rename(id,name){var e=fx(id),n=name.trim();if(!e)return;if(n){e.name=addBank(n);save();}render();}
+function addB(){var i=document.getElementById('bn'),n=i.value.trim();if(!n)return;addBank(n);save();bq='';render();}
+function del(fn){
+  snap=JSON.stringify(S);fn();save();render();
+  document.getElementById('tt').textContent='Poistettu.';document.getElementById('ts').hidden=false;
+  clearTimeout(tto);tto=setTimeout(function(){document.getElementById('ts').hidden=true;},8000);
+}
+function ad(){var w=W();if(w&&!w.date){w.date=iso();var d=document.getElementById('wd');if(d)d.value=w.date;}}
+function tick(){
+  var r=Math.ceil((tEnd-Date.now())/1000),tm=document.getElementById('tm');
+  if(r>0){tm.textContent=Math.floor(r/60)+':'+('0'+r%60).slice(-2);}
+  else{clearInterval(tI);tI=null;tm.textContent='Lepo ohi';beep();}
+}
+function runT(){clearInterval(tI);tI=setInterval(tick,250);tick();}
+function beep(){try{if(navigator.vibrate)navigator.vibrate([200,100,200]);var A=window.AudioContext||window.webkitAudioContext,a=new A(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();setTimeout(function(){o.stop();a.close();},350);}catch(e){}}
+function arm(b,txt){
+  if(b._arm)return true;b._arm=1;b._t=b.textContent;b.textContent=txt;
+  setTimeout(function(){b._arm=0;if(b.isConnected)b.textContent=b._t;},3000);return false;
+}
+function tsv(){
+  var mx=1;S.cycles.forEach(function(c){c.wk.forEach(function(w){w.ex.forEach(function(e){if(e.sets.length>mx)mx=e.sets.length;});});});
+  var h=['Kierto','Treeni','Päivä','Liike','Yksikkö'];for(var i=1;i<=mx;i++){h.push(i+'. toistot');h.push(i+'. painot');}
+  var L=[h.join('\t')],c=function(v){return String(v).replace(/[\t\n\r]/g,' ').replace('.',',');};
+  S.cycles.forEach(function(cy,ci){cy.wk.forEach(function(w){w.ex.forEach(function(e){
+    var r=[ci+1,w.name,w.date,e.name,U(e)];
+    for(var i=0;i<mx;i++){var s=e.sets[i];r.push(s?c(s.reps):'');r.push(s?c(s.kg):'');}
+    L.push(r.map(function(x){return String(x).replace(/[\t\n\r]/g,' ');}).join('\t'));
+  });});});
+  return L.join('\n');
+}
+document.addEventListener('input',function(ev){
+  var t=ev.target,a=t.dataset.a,w=W();
+  if(a==='wname'&&w){w.name=t.value;var c=document.querySelector('[data-c="'+aw+'"]');if(c)c.textContent=chipT(w);save();}
+  else if(a==='wdate'&&w){w.date=t.value;save();}
+  else if(a==='wnote'&&w){w.note=t.value;save();}
+  else if(a==='exnote'){var n=fx(t.dataset.e);if(n){n.note=t.value;save();}}
+  else if(a==='set'){var e=fx(t.dataset.e);if(e){e.sets[+t.dataset.i][t.dataset.f]=t.value;ad();save();
+    var q=document.querySelector('[data-dl="'+e.id+'"]');if(q)q.textContent=dl(e);}}
+  else if(a==='exname'||a==='ne'){sg(t);}
+  else if(a==='bq'){bq=t.value;document.getElementById('bl').innerHTML=bl();}
+  else if(a==='rest'){S.rest=parseInt(t.value,10)||90;save();}
+});
+document.addEventListener('change',function(ev){
+  var t=ev.target,a=t.dataset.a;
+  if(a==='exname'){setTimeout(function(){if(document.body.contains(t))rename(t.dataset.e,t.value);},0);}
+  else if(a==='done'){
+    var e=fx(t.dataset.e);if(!e)return;e.sets[+t.dataset.i].d=t.checked;
+    t.closest('.row').classList.toggle('d',t.checked);rf();
+    if(t.checked){ad();document.getElementById('tb').hidden=false;tEnd=Date.now()+(S.rest||90)*1000;runT();}
+    save();
+  }
+});
+document.addEventListener('keydown',function(ev){
+  if(ev.key!=='Enter')return;var t=ev.target,a=t.dataset.a;
+  if(a==='ne')addEx(t.value);else if(a==='exname')t.blur();else if(a==='bn')addB();
+});
+document.addEventListener('mousedown',function(ev){if(ev.target.closest('.sg'))ev.preventDefault();});
+document.addEventListener('focusout',function(){setTimeout(function(){document.querySelectorAll('.sg').forEach(function(b){b.innerHTML='';});},200);});
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('button');if(!b)return;var a=b.dataset.a,e,w=W(),c=cur();
+  if(a==='v'){view=b.dataset.v;render();window.scrollTo(0,0);}
+  else if(a==='aw'){aw=+b.dataset.i;render();}
+  else if(a==='addw'){c.wk.push({id:uid(),name:'Treeni '+(c.wk.length+1),date:'',note:'',ex:[]});aw=c.wk.length-1;save();render();}
+  else if(a==='rmw'){del(function(){c.wk.splice(aw,1);aw=0;});}
+  else if(a==='pick'){var inp=b.parentNode.parentNode.querySelector('input');if(inp.dataset.a==='ne')addEx(b.dataset.v);else rename(inp.dataset.e,b.dataset.v);}
+  else if(a==='addset'){e=fx(b.dataset.e);var l=e.sets[e.sets.length-1]||{kg:'',reps:''};e.sets.push({kg:l.kg,reps:l.reps});save();render();}
+  else if(a==='rmset'){e=fx(b.dataset.e);del(function(){e.sets.splice(+b.dataset.i,1);});}
+  else if(a==='rmex'){del(function(){w.ex=w.ex.filter(function(x){return x.id!==b.dataset.e;});});}
+  else if(a==='mv'){var i=w.ex.indexOf(fx(b.dataset.e)),j=i+(+b.dataset.d);if(j>=0&&j<w.ex.length){var x=w.ex[i];w.ex[i]=w.ex[j];w.ex[j]=x;save();render();}}
+  else if(a==='unit'){e=fx(b.dataset.e);if(e&&U(e)!==b.dataset.u){e.u=b.dataset.u;save();render();}}
+  else if(a==='wdone'){var tg=!wDone(w);w.ex.forEach(function(x){x.sets.forEach(function(s){s.d=tg;});});if(tg)ad();save();render();}
+  else if(a==='prog'){pn=b.dataset.n;view='prog';render();window.scrollTo(0,0);}
+  else if(a==='newc'){if(arm(b,'Vahvista: uusi kierto alkaa')){S.cycles.push(cp(c));aw=0;save();render();window.scrollTo(0,0);}}
+  else if(a==='addb'){addB();}
+  else if(a==='rmb'){del(function(){S.bank.splice(+b.dataset.i,1);});}
+  else if(a==='undo'){if(snap){S=JSON.parse(snap);snap=null;save();render();document.getElementById('ts').hidden=true;}}
+  else if(a==='tx'){clearInterval(tI);tI=null;document.getElementById('tb').hidden=true;}
+  else if(a==='tm'){tEnd=Math.max(Date.now()+1000,tEnd+(+b.dataset.s)*1000);runT();}
+  else if(a==='expj'){document.getElementById('out').value=JSON.stringify(S);}
+  else if(a==='expt'){document.getElementById('out').value=tsv();}
+  else if(a==='copy'){
+    var o=document.getElementById('out');if(!o.value)return;o.select();
+    try{document.execCommand('copy');}catch(x){}
+    try{if(navigator.clipboard)navigator.clipboard.writeText(o.value);}catch(x){}
+    var t0=b.textContent;b.textContent='Kopioitu';setTimeout(function(){b.textContent=t0;},2000);
+  }
+  else if(a==='imp'){
+    var v=document.getElementById('inp').value.trim(),m=document.getElementById('im');
+    if(!v){m.textContent='Liitä ensin varmuuskopio.';return;}
+    var o2;try{o2=JSON.parse(v);}catch(x){o2=null;}
+    if(!o2||!o2.cycles||!o2.cycles.length||!o2.bank){m.textContent='Tekstiä ei tunnistettu varmuuskopioksi. Tarkista, että kopioit sen kokonaan.';return;}
+    if(arm(b,'Vahvista: korvaa nykyiset tiedot')){S=o2;migrate();aw=0;save();view='train';render();}
+  }
+});
+render();
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+})();
+</script>
+</body>
+</html>
